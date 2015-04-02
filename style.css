@@ -1,0 +1,44 @@
+/*
+ Theme Name:   Layers Child
+ Description:  Layers Child Theme Test: http://www.oboxthemes.com
+ Author:       Obox Themes
+ Template:     layerswp
+ Version:      1.0.0
+ License:      GPL 2.0
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ 
+**Color reference, for consistency**
+
+link color: #3D454C
+border color: #CCC
+light blue: #009DF3
+
+Replace the following with your own CSS or build from the examples. */
+
+/* Open Sans is included in Layers by default, but not made primary.*/
+body{font: 1.5rem "Open Sans", Arial, Helvetica, sans-serif;}
+
+.nav-horizontal li a, .header-cart a{text-transform: uppercase;}
+
+h3.heading{margin: 0 0 47px; font-size: 4.8rem; line-height: 57px; font-weight: 300;}
+
+/* Lighten the Slider button on hover using opacity */
+.banner .button:hover{opacity: .5; -moz-opacity: .5;}
+
+/* Adjust some homepage widget typography */
+.section-title.large .heading{margin: 0 0 3px; padding: 0; font-size: 3.8rem; font-weight: 300; text-transform: uppercase;}
+
+.section-title.text-center .excerpt{margin: 0 auto; font-size: 1.6rem;}
+
+h5.heading{text-transform: uppercase;}
+
+.section-title.medium h3.heading{margin: 0 0 3px;font-size: 28px;line-height: 32px;font-weight: 400;}
+
+
+/* POSTS */
+.entry-title, .section-title.large .heading {padding-bottom: 30px; margin-bottom: 30px; border-bottom: 2px solid #DDD;}
+
+/* FOOTER */
+#footer.well{background: #FFF; border-top: 1px solid #ddd;}
+#footer .section-nav-title{margin: 0; padding: 0 0 12px; font-size: 1.6rem; color: #353e4f; font-weight: 600; border-bottom: 1px solid #e4e4e4; text-transform: capitalize;}
+#footer .menu {margin: 0; padding: 16px 9px 0; font-size: 1.4rem; list-style: none; overflow: hidden;}
