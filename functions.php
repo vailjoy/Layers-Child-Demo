@@ -4,7 +4,7 @@
  * Layers Child Theme Custom Functions
  * Replace layers_child in examples with your own child theme name!
 **/
-
+require_once get_stylesheet_directory() . '/includes/presets.php';
 
 /**
  * Localize
@@ -19,43 +19,26 @@
 	}
  }
 
-/* Add an extra Google Font (hosted) 
-* * http://themeshaper.com/2014/08/13/how-to-add-google-fonts-to-wordpress-themes/
+/* Set Font and Theme Defaults
+* * http://docs.layerswp.com/?p=2290
 * Since 1.0
 */
-if( ! function_exists( 'layers_child_font_url' ) ) {	
-	
-	function layers_child_font_url() {
-		$fonts_url = '';
-	 
-		/* Translators: If there are characters in your language that are not
-		* supported by Lora, translate this to 'off'. Do not translate
-		* into your own language.
-		*/
-		$lora = _x( 'on', 'Lora font: on or off', 'layers-child' );
-	    $raleway = _x( 'on', 'Raleway font: on or off', 'layers-child' );
-		
-		if ( 'off' !== $lora || 'off' !== $raleway ) {
-			$font_families = array();
-	 
-			if ( 'off' !== $lora ) {
-				$font_families[] = 'Lora:400,700,400italic';
-			}
-			if ( 'off' !== $raleway ) {
-				$font_families[] = 'Raleway:400,700,400italic';
-			}
-	 
-			$query_args = array(
-				'family' => urlencode( implode( '|', $font_families ) ),
-				'subset' => urlencode( 'latin,latin-ext' ),
-			);
-	 
-			$fonts_url = add_query_arg( $query_args, '//fonts.googleapis.com/css' );
-		}
-	 
-		return $fonts_url;
-	}
-	
+add_filter( 'layers_customizer_defaults', 'layers_child_customizer_defaults' );
+
+function layers_child_customizer_defaults( $defaults ){
+
+   $defaults = array(
+       'header-menu-layout' => 'header-logo-right',
+       'heading-fonts' => 'Merriweather',
+       'body-fonts' => 'Lato',
+       'form-fonts' => 'Lato',
+       'header-background-color' => '#3398d6',
+       'header-sticky' => '1',
+       'footer-sidebar-count' => '0',
+       'footer-background-color' => '#333333',
+   );
+
+   return $defaults;
 }
 
  /* Enqueue Child Theme Scripts & Styles 
@@ -67,20 +50,13 @@ add_action( 'wp_enqueue_scripts', 'layers_child_styles' );
 
 if( ! function_exists( 'layers_child_styles' ) ) {	
 
-	function layers_child_styles() {
-		
-		// Load our custom font
-		wp_enqueue_style(
-			'layers-child' . '-font',
-			layers_child_font_url(), //Refer to line 63
-			array()
-		); // Lora Font
+	function layers_child_styles() {	
 					
 		wp_enqueue_style(
 			'layers-parent-style',
 			get_template_directory_uri() . '/style.css',
 			array()
-		); // Typography
+		); // Parent Stylsheet for Version info
 
 		
 	}
@@ -163,3 +139,16 @@ if( ! function_exists( 'layers_child_set_content_width' ) ) {
 	}
 	
  }
+  /**
+ * Customize list post meta to show author and date above the excerpt
+ ** http://docs.layerswp.com/reference/layers_before_…t_post_content/
+ * Since 1.0
+ */
+ 
+add_action('layers_before_list_post_content', 'my_list_author');
+
+if(! function_exists('my_list_author') ) {
+    function my_list_author() { 
+     layers_post_meta( get_the_ID(), array( 'author', 'date' ) , 'h5', 'meta-info' );
+    }
+}
