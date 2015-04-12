@@ -23,22 +23,23 @@ require_once get_stylesheet_directory() . '/includes/presets.php';
 * * http://docs.layerswp.com/?p=2290
 * Since 1.0
 */
-add_filter( 'layers_customizer_defaults', 'layers_child_customizer_defaults' );
+add_filter( 'layers_customizer_control_defaults', 'layers_child_customizer_defaults' );
 
 function layers_child_customizer_defaults( $defaults ){
 
-   $defaults = array(
-       'header-menu-layout' => 'header-logo-right',
-       'heading-fonts' => 'Merriweather',
+ $defaults = array(
        'body-fonts' => 'Lato',
        'form-fonts' => 'Lato',
-       'header-background-color' => '#3398d6',
+       'header-menu-layout' => 'header-logo-left',
+       'header-background-color' => 'transparent',
+       'header-width' => 'layout-boxed',
        'header-sticky' => '1',
+	   'header-overlay' => '1',
+       'heading-fonts' => 'Mandali',
        'footer-sidebar-count' => '0',
-       'footer-background-color' => '#333333',
-   );
+ );
 
-   return $defaults;
+ return $defaults;
 }
 
  /* Enqueue Child Theme Scripts & Styles 
