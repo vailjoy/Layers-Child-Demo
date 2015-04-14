@@ -31,12 +31,15 @@ function layers_child_customizer_defaults( $defaults ){
        'body-fonts' => 'Lato',
        'form-fonts' => 'Lato',
        'header-menu-layout' => 'header-logo-left',
-       'header-background-color' => 'transparent',
+       'header-background-color' => '',
        'header-width' => 'layout-boxed',
        'header-sticky' => '1',
 	   'header-overlay' => '1',
        'heading-fonts' => 'Mandali',
        'footer-sidebar-count' => '0',
+	   'footer-background-color' => '#333333',
+	   'footer-link-color' => '#FFF',
+	   'footer-body-color' => '#FFF'
  );
 
  return $defaults;

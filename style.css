@@ -15,14 +15,14 @@ light blue: #61c1bf
 
 Replace the following with your own CSS or build from the examples. */
 
-.header-site.header-sticky{
+.header-site, .header-site.header-sticky{
 	opacity: 1;
 	background-color: transparent;
 }
 .header-sticky.is_stuck.is_stuck_show{
 	background: #f15e53;
 }
-.nav-horizontal li a{
+.site-description a, .nav-horizontal li a{
 	color: #FFF;
 }
 .nav-horizontal li a:hover{
