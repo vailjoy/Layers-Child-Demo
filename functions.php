@@ -72,7 +72,7 @@ if( ! function_exists( 'layers_child_scripts' ) ) {
 		
 		wp_enqueue_script(
 			'layers-child' . '-custom',
-			get_stylesheet_directory() . '/assets/js/theme.js',
+			get_stylesheet_directory_uri() . '/assets/js/theme.js',
 			array(
 				'jquery', // make sure this only loads if jQuery has loaded
 			)
