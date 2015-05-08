@@ -72,7 +72,7 @@ if( ! function_exists( 'layers_child_scripts' ) ) {
 		
 		wp_enqueue_script(
 			'layers-child' . '-custom',
-			get_stylesheet_directory_uri() . '/assets/js/theme.js',
+			get_stylesheet_directory() . '/assets/js/theme.js',
 			array(
 				'jquery', // make sure this only loads if jQuery has loaded
 			)
@@ -156,3 +156,54 @@ if(! function_exists('my_list_author') ) {
      layers_post_meta( get_the_ID(), array( 'author', 'date' ) , 'h5', 'meta-info' );
     }
 }
+
+  /**
+ * Add custom color controls to the Site Colors section
+ ** http://docs.layerswp.com/theming/#customizer-controls-defaults
+ * Since 1.0
+ */
+
+add_filter( 'layers_customizer_controls', 'my_layers_customizer_controls' );
+
+function my_layers_customizer_controls( $controls ){
+
+    $my_color_controls = array(
+	    'widget-title-color' => array(
+						'label' => '',
+						'subtitle'		=> __( 'Sidebar Widget Title Color' , 'layers-child' ),
+						'description' => __( 'This affects the title color of widgets in the post or page sidebar', 'layerswp' ),
+						'type'		=> 'layers-color',
+						'default'	=> '',
+		),     
+    );
+
+    $controls['site-colors'] = array_merge( $controls['site-colors'], $my_color_controls );
+
+    return $controls;
+}
+
+/**
+ * Apply Customizer settings to site housing
+ * https://github.com/Obox/layerswp/blob/master/core/helpers/template.php#L370
+ */
+if( !function_exists( 'layers_child_customizer_styles' ) ) {
+	function layers_child_customizer_styles() {
+
+		/**
+		* Setup the colors to use below
+		*/
+		$widget_title_color = layers_get_theme_mod( 'widget-title-color' , TRUE );
+
+
+		if( '' != $widget_title_color ) {
+			// Content - Links
+			layers_inline_styles( array(
+				'selectors' => array( '.sidebar .section-nav-title'),
+				'css' => array(
+					'color' => $widget_title_color,
+				),
+			));		
+		}
+	}
+}
+add_action( 'wp_enqueue_scripts', 'layers_child_customizer_styles', 100 );
