@@ -163,9 +163,9 @@ if(! function_exists('my_list_author') ) {
  * Since 1.0
  */
 
-add_filter( 'layers_customizer_controls', 'my_layers_customizer_controls' );
+add_filter( 'layers_customizer_controls', 'my_layers_color_controls' );
 
-function my_layers_customizer_controls( $controls ){
+function my_layers_color_controls( $controls ){
 
     $my_color_controls = array(
 	    'widget-title-color' => array(
@@ -207,3 +207,48 @@ if( !function_exists( 'layers_child_customizer_styles' ) ) {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'layers_child_customizer_styles', 100 );
+
+
+/**
+ * Create a Custom Section in Customizer for your Theme's Options
+ * https://github.com/Obox/layerswp/blob/master/core/helpers/template.php#L370
+ */
+add_filter( 'layers_customizer_sections', 'my_layers_customizer_sections' );
+
+function my_layers_customizer_sections( $sections ){
+ 
+    $social_media_section[ 'header-social-media' ] = array(
+            'title'      => __( 'Social Media Profiles' , 'layers-child' ),
+            'panel'     => 'header',
+        );
+ 
+    $sections = array_merge( $sections, $social_media_section );
+ 
+    return $sections;
+}
+
+/**
+ * Add the Custom Controls to the Custom Section
+ * http://docs.layerswp.com/create-an-extension-adding-customizer-controls/
+ */
+add_filter( 'layers_customizer_controls', 'my_layers_customizer_controls' );
+
+function my_layers_customizer_controls( $controls ){
+
+    $controls[ 'header-social-media' ] = array(
+       'social-twitter' => array(
+            'type'      => 'layers-text',
+            'label'     => __( 'Twitter Username' , 'layerswp' ),
+        ),
+       'social-facebook' => array(
+            'type' => 'layers-text',
+            'label'     => __( 'Facebook Vanity URL' , 'layerswp' ),
+        ),
+       'social-pinterest' => array(
+            'type' => 'layers-text',
+            'label'     => __( 'Pinterest Username' , 'layerswp' ),
+        ),
+    );
+
+    return $controls;
+}
