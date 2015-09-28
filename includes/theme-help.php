@@ -30,8 +30,8 @@
                                     <?php _e( 'This setup wizard serves as an introduction to your theme and any special options it may have.' , 'layers-child' ); ?>
                                 </p>
                                 <ul>
-                                    <li><a href="" target="_blank"><?php _e( 'Open the Guide in a New Tab' , 'layers-child' ); ?></a></li>
-                                    <li><a href="" target="_blank"><?php _e( 'Open the Oboarding Tutorial' , 'layers-child' ); ?></a></li>
+                                    <li><a href="http://docs.layerswp.com/theming/" target="_blank"><?php _e( 'Open the Guide in a New Tab' , 'layers-child' ); ?></a></li>
+                                    <li><a href="http://docs.layerswp.com/how-to-add-help-pages-onboarding-to-layers-themes-or-extensions/" target="_blank"><?php _e( 'Open the Oboarding Tutorial' , 'layers-child' ); ?></a></li>
                                 </ul>    
                             </div>
                         </div>
