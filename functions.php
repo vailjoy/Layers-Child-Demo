@@ -1,10 +1,11 @@
 <?php
-
 /**
  * Layers Child Theme Custom Functions
- * Replace layers_child in examples with your own child theme name!
+ * Replace layers_child in examples with your own child theme slug!
+ * http://docs.layerswp.com/child-theme-setup/
 **/
-require_once get_stylesheet_directory() . '/includes/presets.php';
+require_once get_stylesheet_directory() . '/includes/presets.php' ;
+require_once get_stylesheet_directory() . '/includes/custom-meta.php' ;
 
 /**
  * Localize
@@ -20,7 +21,7 @@ require_once get_stylesheet_directory() . '/includes/presets.php';
  }
 
 /* Set Font and Theme Defaults
-* * http://docs.layerswp.com/?p=2290
+** http://docs.layerswp.com/reference/layers_customizer_defaults/
 * Since 1.0
 */
 add_filter( 'layers_customizer_control_defaults', 'layers_child_customizer_defaults' );
@@ -85,54 +86,77 @@ if( ! function_exists( 'layers_child_scripts' ) ) {
 // http://codex.wordpress.org/Plugin_API/Action_Reference/wp_footer
 add_action('wp_enqueue_scripts', 'layers_child_scripts'); 
  
-/**
- * Set the post editor content width based on the theme's design and stylesheet.
- * Since 1.0
- */
-if ( ! isset( $content_width ) ) {
-	$content_width = 720; /* pixels */
-}
 
 /**
  * Adjust the post editor content width when the full width page template is being used
  * Filter existing function to replace with our code
  */
+add_filter( 'layers_set_content_width', 'layers_child_set_content_width', 2, 2 );
 if( ! function_exists( 'layers_child_set_content_width' ) ) {	
-
-	 add_filter( 'layers_set_content_width', 'layers_child_set_content_width', 2, 2 );
-	
 	 function layers_child_set_content_width() {
 		global $content_width;
 	
 		if ( is_page_template( 'full-width.php' ) ) {
-			$content_width = 1120;
+			$content_width = 1120; // pixels
 		} elseif( is_singular() ) {
-			$content_width = 720;
+			$content_width = 720; //pixels
 		}
 	 }
  
 }
 
- /* Add Excerpt Support for Pages 
- ** http://codex.wordpress.org/Function_Reference/add_post_type_support
- * Since 1.0 
- */
- if( ! function_exists( 'layers_child_add_excerpts_to_pages' ) ) {	
- 
- 	add_action( 'init', 'layers_child_add_excerpts_to_pages' );
- 
+/**
+* Add Sub Menu Page to the Layers Menu Item
+* http://docs.layerswp.com/how-to-add-help-pages-onboarding-to-layers-themes-or-extensions/
+*/
+if( ! function_exists('register_layers_child_submenu_page') ) {
+	function register_layers_child_submenu_page(){
+		add_submenu_page(
+			'layers-dashboard',
+			__( 'Layers Child Help' , 'layers-child'  ),
+			__( 'Layers Child Help' , 'layers-child'  ),
+			'edit_theme_options',			
+			'layers-child-get-started',
+			'get_child_onboarding'
+			
+		);
+	}
+}
+function get_child_onboarding(){
+	require_once get_stylesheet_directory() . '/includes/theme-help.php';
+}
+add_action('admin_menu', 'register_layers_child_submenu_page', 60);
+
+/**
+* Welcome Redirect
+* http://docs.layerswp.com/how-to-add-help-pages-onboarding-to-layers-themes-or-extensions/
+*/
+function layers_child_setup(){
+	if( isset($_GET["activated"]) && $pagenow = "themes.php" ) { //&& '' == get_option( 'layers_welcome' )
+		update_option( 'layers_welcome' , 1);
+		wp_safe_redirect( admin_url('admin.php?page=layers-child-get-started'));
+	}
+}
+add_action( 'after_setup_theme' , 'layers_child_setup', 20 );
+
+/* Demo Custom function: Add Excerpt Support for Pages 
+** http://codex.wordpress.org/Function_Reference/add_post_type_support
+* Since 1.0 
+*/
+add_action( 'init', 'layers_child_add_excerpts_to_pages' );
+
+if( ! function_exists( 'layers_child_add_excerpts_to_pages' ) ) {	
 	function layers_child_add_excerpts_to_pages() {
 		add_post_type_support( 'page', 'excerpt' );
-	}
-	
+	}	
  }
 
 
- /**
- * Add the title banner to all builder pages other than home
+/**
+ * Hooking Layers: Add the title banner to all builder pages other than home
  ** http://codex.oboxsites.com/reference/before_layers_builder_widgets/
  * Since 1.0
- */
+*/
  add_action('layers_after_builder_widgets', 'layers_child_builder_title');
  if(! function_exists( 'layers_child_builder_title' )) {	
 		
@@ -143,11 +167,12 @@ if( ! function_exists( 'layers_child_set_content_width' ) ) {
 	}
 	
  }
-  /**
+
+/**
  * Customize list post meta to show author and date above the excerpt
  ** http://docs.layerswp.com/reference/layers_before_…t_post_content/
  * Since 1.0
- */
+*/
  
 add_action('layers_before_list_post_content', 'my_list_author');
 
@@ -155,100 +180,4 @@ if(! function_exists('my_list_author') ) {
     function my_list_author() { 
      layers_post_meta( get_the_ID(), array( 'author', 'date' ) , 'h5', 'meta-info' );
     }
-}
-
-  /**
- * Add custom color controls to the Site Colors section
- ** http://docs.layerswp.com/theming/#customizer-controls-defaults
- * Since 1.0
- */
-
-add_filter( 'layers_customizer_controls', 'my_layers_color_controls' );
-
-function my_layers_color_controls( $controls ){
-
-    $my_color_controls = array(
-	    'widget-title-color' => array(
-						'label' => '',
-						'subtitle'		=> __( 'Sidebar Widget Title Color' , 'layers-child' ),
-						'description' => __( 'This affects the title color of widgets in the post or page sidebar', 'layerswp' ),
-						'type'		=> 'layers-color',
-						'default'	=> '',
-		),     
-    );
-
-    $controls['site-colors'] = array_merge( $controls['site-colors'], $my_color_controls );
-
-    return $controls;
-}
-
-/**
- * Apply Customizer settings to site housing
- * https://github.com/Obox/layerswp/blob/master/core/helpers/template.php#L370
- */
-if( !function_exists( 'layers_child_customizer_styles' ) ) {
-	function layers_child_customizer_styles() {
-
-		/**
-		* Setup the colors to use below
-		*/
-		$widget_title_color = layers_get_theme_mod( 'widget-title-color' , TRUE );
-
-
-		if( '' != $widget_title_color ) {
-			// Content - Links
-			layers_inline_styles( array(
-				'selectors' => array( '.sidebar .section-nav-title'),
-				'css' => array(
-					'color' => $widget_title_color,
-				),
-			));		
-		}
-	}
-}
-add_action( 'wp_enqueue_scripts', 'layers_child_customizer_styles', 100 );
-
-
-/**
- * Create a Custom Section in Customizer for your Theme's Options
- * https://github.com/Obox/layerswp/blob/master/core/helpers/template.php#L370
- */
-add_filter( 'layers_customizer_sections', 'my_layers_customizer_sections' );
-
-function my_layers_customizer_sections( $sections ){
- 
-    $social_media_section[ 'header-social-media' ] = array(
-            'title'      => __( 'Social Media Profiles' , 'layers-child' ),
-            'panel'     => 'header',
-        );
- 
-    $sections = array_merge( $sections, $social_media_section );
- 
-    return $sections;
-}
-
-/**
- * Add the Custom Controls to the Custom Section
- * http://docs.layerswp.com/create-an-extension-adding-customizer-controls/
- */
-add_filter( 'layers_customizer_controls', 'my_layers_customizer_controls' );
-
-function my_layers_customizer_controls( $controls ){
-
-    $controls[ 'header-social-media' ] = array(
-       'social-twitter' => array(
-            'type'      => 'layers-text',
-            'label'     => __( 'Twitter Username' , 'layerswp' ),
-        ),
-       'social-facebook' => array(
-            'type' => 'layers-text',
-            'label'     => __( 'Facebook Vanity URL' , 'layerswp' ),
-        ),
-       'social-pinterest' => array(
-            'type' => 'layers-text',
-            'label'     => __( 'Pinterest Username' , 'layerswp' ),
-        ),
-    );
-
-    return $controls;
 }
