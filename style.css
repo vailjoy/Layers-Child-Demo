@@ -7,46 +7,113 @@
  License:      GPL 2.0
  License URI:  http://www.gnu.org/licenses/gpl-2.0.html
  
- For Help Setting Up this file:
+ This file is for demonstration and is intended as a teaching resource. 
+ Do not use it directly in commercial child themes!
+ 
+ For Help Adapting this file for your theme:
  http://docs.layerswp.com/child-theme-setup/
+ 
  
 **Color reference, for consistency**
 
-link color: #f15e53
-border color: #DDD
-light blue: #61c1bf
+	link color: #f15e53
+	border color: #DDD
+	light blue: #61c1bf
 
-Replace the following with your own CSS or build from the examples. */
+**Table of contents**
 
+    1. Header 
+    2. Forms
+    3. Invert 
+    4. Buttons 
+    5. Headings
+	6. Sidebar
+	7. Meta
+	8. Footer 
+
+/*---------------------------*/
+/*- MAIN CSS ----------------*/
+/*---------------------------*/
+
+/*---------------------------*/
+/*- 1 HEADER  -------*/
 .site-description a, .nav-horizontal li a{
-	color: #FFF;
 }
 .nav-horizontal li a:hover{
-	color: #000;
 }
 
-.image-right .copy-container{
-	width: 45%;
+/*---------------------------*/
+/*- 2 FORMS  ----------*/
+textarea,
+select,
+input,
+input[type="submit"],
+button,
+.button{
 }
-.image-right .image-container{
-	max-height: 600px; 
-	text-align: right;
+.form-submit input[type="submit"]{;
 }
-.section-title.large .heading{
-	text-transform: uppercase; 
-	padding-bottom: 20px; 
+
+.comment-form-comment{
 }
+/*---------------------------*/
+/*- 3 INVERT  --------*/
+.invert .section-title .excerpt,
+.invert.section-title .excerpt{
+}
+
+/*---------------------------*/
+/*- 4 BUTTONS  ------*/
+
+    /*-----------------------*/
+    /*- GLOBAL --------------*/
+    .button.btn-small{
+    }
+
+    /*-----------------------*/
+    /*- SLIDER BUTTON -------*/
+    .swiper-wrapper .button,
+    .swiper-wrapper .invert .button{
+    }
+    .swiper-wrapper .button:hover,
+    .swiper-wrapper .invert .button:hover{
+    }
+
+
+/*---------------------------*/
+/*- 5 HEADINGS  ------*/
+
 .heading{
-	font-weight: 700;
-}
-.sub-menu{
-	border: 0;
-}
-.sub-menu li a{
-	color: #61c1bf;
 }
 
-#footer a, #footer.well a {
-text-transform: uppercase; 
-font-size: 1.2rem;
+/*-------------------------------*/
+/*- 6 SIDEBAR WIDGETS  -*/
+.sidebar{
 }
+.sidebar a:not(.button){
+}
+.sidebar .section-nav-title{
+}
+.sidebar .content.well{
+}
+
+/*---------------------------*/
+/*- 7 META INFO  ------*/
+.meta-info{
+}
+.meta-info a{
+}
+.meta-info a:hover{
+}
+
+/*---------------------------*/
+/*- 8 SITE FOOTER  --*/
+.footer-site{
+}
+.footer-site .widget:not(:first-child){
+}
+.footer-site .section-nav-title{
+}
+
+
+
