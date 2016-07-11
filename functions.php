@@ -16,7 +16,7 @@ require_once get_stylesheet_directory() . '/includes/custom-meta.php' ;
 	add_action('after_setup_theme', 'layers_child_localize');
 
 	function layers_child_localize(){
-		load_child_theme_textdomain( 'layers-child' , get_stylesheet_directory().'/languages');
+		load_child_theme_textdomain( 'layers-child-demo' , get_stylesheet_directory().'/languages');
 	}
  }
 
@@ -72,7 +72,7 @@ if( ! function_exists( 'layers_child_scripts' ) ) {
 	function layers_child_scripts() {
 		
 		wp_enqueue_script(
-			'layers-child' . '-custom',
+			'layers-child-demo' . '-custom',
 			get_stylesheet_directory() . '/assets/js/theme.js',
 			array(
 				'jquery', // make sure this only loads if jQuery has loaded
@@ -113,8 +113,8 @@ if( ! function_exists('register_layers_child_submenu_page') ) {
 	function register_layers_child_submenu_page(){
 		add_submenu_page(
 			'layers-dashboard',
-			__( 'Layers Child Help' , 'layers-child'  ),
-			__( 'Layers Child Help' , 'layers-child'  ),
+			__( 'Layers Child Help' , 'layers-child-demo'  ),
+			__( 'Layers Child Help' , 'layers-child-demo'  ),
 			'edit_theme_options',			
 			'layers-child-get-started',
 			'get_child_onboarding'
